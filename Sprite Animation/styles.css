@@ -1,0 +1,50 @@
+:root {
+  --sprite-width: 32px;
+  --sprite-height: 32px;
+  --sprites: 2;
+  --animation-length: .5s;
+}
+
+body {
+  background-color: #222222;
+  height: 100vh;
+  margin: 0;
+  position: relative; /* this allow us to center the sprite-view-frame on the page*/
+}
+
+.sprite-view-frame {
+  width: var(--sprite-width);
+  height: var(--sprite-height);
+  overflow: hidden; /* this will hide any sprites outside of the frame */
+
+  /* position the view frame on the page */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.sprite-renderer {
+  width: var(--sprite-width);
+  height: var(--sprite-height);
+  background-image: url("./walking-man.png"); /* the sprite sheet */
+
+  /* this prevemts the browser from aliasing our pixel art image and making it blurry */
+  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-pixelated;
+  image-rendering: pixelated;
+
+  /* this is where the animation happens */
+  animation: animateSprites var(--animation-length) infinite steps(var(--sprites));
+}
+
+@keyframes animateSprites {
+  0% {
+    background-position: 0px;
+  }
+  100% {
+    background-position: calc(var(--sprite-width) * var(--sprites) * -1);
+  }
+}
